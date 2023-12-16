@@ -1,0 +1,18 @@
+/* -------------------------------------- RESET */
+*,*::before,*::after{box-sizing: border-box; padding: 0; margin: 0;}
+a{color: inherit; text-decoration: none;}
+ul,ol{list-style: none;}
+h1,h2,h3,h4,h5,h6{font-weight: inherit; font-size: inherit;}
+html,body{height: 100%;}
+/* -------------------------------------- ROOT */
+:root{
+  --index: calc(1vw + 1vh);
+  --color-black: #000;
+  --color-white: #fff;
+}
+/* -------------------------------------- CONTAINER */
+[class*=__container]{
+  max-width: 77rem;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
