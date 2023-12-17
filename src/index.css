@@ -1,18 +1,56 @@
 /* -------------------------------------- RESET */
-*,*::before,*::after{box-sizing: border-box; padding: 0; margin: 0;}
+*,*::before,*::after{box-sizing: border-box; padding: 0; margin: 0; font:400 16px Inter, sans-serif;}
 a{color: inherit; text-decoration: none;}
 ul,ol{list-style: none;}
 h1,h2,h3,h4,h5,h6{font-weight: inherit; font-size: inherit;}
 html,body{height: 100%;}
 /* -------------------------------------- ROOT */
 :root{
+/*Sizes*/
   --index: calc(1vw + 1vh);
+  --margin-big: calc(var(--index)*3);
+  --margin-middle: calc(var(--index)*2);
+  --margin-small: calc(var(--index)*1);
+  --borrad-big: 10px;
+  --borrad-small: 5px;
+/*Colors*/
   --color-black: #000;
   --color-white: #fff;
+  --color-gray-light: #C0C5CE;
+  --color-gray-dark: #8891A2;
+  --color-red: #8B5569;
+  --color-pink: #DA70D6;
+  --color-yellow: #F8BD26;
+  --color-orange: #D0866E;
+  --color-green: #A3BE89;
+  --color-blue: #489ABA;
+  --color-background-light: #2B303B;
+  --color-background-dark: #1C1F26;
 }
 /* -------------------------------------- CONTAINER */
-[class*=__container]{
-  max-width: 77rem;
-  padding: 0 1rem;
+[class*=container]{
+  /* max-width: 77rem; */
+  width: 100%;
+  padding: 0 var(--margin-big);
   margin: 0 auto;
 }
+/* -------------------------------------- FONTS */
+@font-face {
+  font-family: 'Inter';
+  src: url('./BLL/fonts/Inter-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./BLL/fonts/Inter-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./BLL/fonts/Inter-Black.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 900;
+}
+
