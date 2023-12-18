@@ -1,7 +1,10 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonForForm } from '../../common/button-for-form';
+import { FieldValues, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { SignupAsyncAC } from '../../../BLL/store/auth/auth.saga';
 
 const Styled = styled.div`  
 display: flex;
@@ -39,12 +42,23 @@ align-items: center;
 }
 `
 export const Signup: FC = () => {
+  const dispatch = useDispatch()
+  const {register, handleSubmit, reset, formState:{isSubmitSuccessful, errors, isValid}} = useForm({mode:'onTouched'})
+  const formHandler = (data:any)=>{
+    dispatch(SignupAsyncAC(data))
+  }
+  useEffect(()=>{
+    reset({
+      'email':null,
+      'password':null
+    })
+  },[isSubmitSuccessful])
   return (
     <Styled>
-      <form className='form'>
+      <form className='form' onSubmit={handleSubmit(formHandler)}>
         <h2 className="title">Registration</h2>
-        <input className='input' type="email" placeholder='Email'/>
-        <input className='input' type="text" placeholder='Password'/>
+        <input className='input' type="email" {...register('email')} placeholder='Email'/>
+        <input className='input' type="text" {...register('password')} placeholder='Password'/>
         <ButtonForForm>Submit</ButtonForForm>
         <Link className='link' to={'/signin'}>Already have an account?</Link>
       </form>

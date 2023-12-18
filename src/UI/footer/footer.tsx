@@ -7,7 +7,7 @@ color: var(--color-gray-light);
 `
 export const Footer:FC = ()=>{
   return (
-    <Styled>
+    <Styled className='container'>
       Footer
     </Styled>
   )

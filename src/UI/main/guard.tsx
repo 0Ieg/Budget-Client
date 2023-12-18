@@ -32,7 +32,7 @@ export const Guard:FC = ()=>{
     <Styled>
       <div className="window">
         <h2 className="title">To use the site, you need to log in</h2>
-        <ButtonWithLink title='Press to Join' link='signup'/>
+        <ButtonWithLink title='Press to Join' link='signin'/>
       </div>
     </Styled>
   )

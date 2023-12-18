@@ -8,9 +8,10 @@ html,body{height: 100%;}
 :root{
 /*Sizes*/
   --index: calc(1vw + 1vh);
-  --margin-big: calc(var(--index)*3);
-  --margin-middle: calc(var(--index)*2);
-  --margin-small: calc(var(--index)*1);
+  --margin-big: 50px;
+  --margin-middle: 35px;
+  --margin-middle: 15px;
+  --margin-small: 5px;
   --borrad-big: 10px;
   --borrad-small: 5px;
 /*Colors*/
@@ -26,6 +27,8 @@ html,body{height: 100%;}
   --color-blue: #489ABA;
   --color-background-light: #2B303B;
   --color-background-dark: #1C1F26;
+
+  --trans: all 0.1s ease;
 }
 /* -------------------------------------- CONTAINER */
 [class*=container]{
