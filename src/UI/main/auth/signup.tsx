@@ -1,10 +1,11 @@
 import { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonForForm } from '../../common/button-for-form';
-import { FieldValues, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { SignupAsyncAC } from '../../../BLL/store/auth/auth.saga';
+import { StateType } from '../../../BLL/store/store';
 
 const Styled = styled.div`  
 display: flex;
@@ -43,6 +44,7 @@ align-items: center;
 `
 export const Signup: FC = () => {
   const dispatch = useDispatch()
+  const isAuth = useSelector((state:StateType)=>state.auth.isAuth)
   const {register, handleSubmit, reset, formState:{isSubmitSuccessful, errors, isValid}} = useForm({mode:'onTouched'})
   const formHandler = (data:any)=>{
     dispatch(SignupAsyncAC(data))
@@ -53,6 +55,10 @@ export const Signup: FC = () => {
       'password':null
     })
   },[isSubmitSuccessful])
+  const navig = useNavigate()
+  useEffect(()=>{
+    isAuth && navig('/')
+  },[isAuth])
   return (
     <Styled>
       <form className='form' onSubmit={handleSubmit(formHandler)}>

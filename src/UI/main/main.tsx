@@ -24,8 +24,8 @@ export const Main:FC = ()=>{
     <Styled className='container'>
       <Routes>
         <Route path='' element={isAuth?<Home/>:<Guard/>}/>
-        <Route path='signup' element={isAuth?<Navigate to=''/>:<Signup/>}/>
-        <Route path='signin' element={isAuth?<Navigate to=''/>:<Signin/>}/>
+        <Route path='signup' element={<Signup/>}/>
+        <Route path='signin' element={<Signin/>}/>
         <Route path='categories' element={isAuth?<Categories/>:<Guard/>}/>
         <Route path='transactions' element={isAuth?<Transactions/>:<Guard/>}/>
         <Route path='error' element={<Error/>}/>

@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { BitcoinSVG } from '../../BLL/icons/iconst';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu } from './menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../BLL/store/store';
 import { LOGOUT } from '../../BLL/store/auth/auth.slice';
+import { toast } from 'react-toastify';
 
 
 const Styled = styled.header`
@@ -16,7 +17,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 .login{
-  font-size: calc(var(--index)*0.66);
+  font-size: 20px;
   transition: var(--trans);
   &:hover{
     color: var(--color-pink);
@@ -43,8 +44,11 @@ svg{
 export const Header:FC = ()=>{
   const isAuth = useSelector((state:StateType)=>state.auth.isAuth)
   const dispatch = useDispatch()
+  const navig = useNavigate()
   const logoutHandler = ()=>{
     dispatch(LOGOUT())
+    navig('/')
+    toast.success('Come back again')
   }
   return (
     <Styled className='container'>
