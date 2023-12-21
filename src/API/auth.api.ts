@@ -29,7 +29,6 @@ export const ProfileAPI = ()=>{
   return(
     myAxios.get('auth/profile')
     .then(res=>{
-      console.log(res.data)
       return res.data.id
     })
     .catch(error=>{console.log(error.response?.data.message)})

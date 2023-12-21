@@ -7,10 +7,10 @@ export const updateTransactionAsyncAC = createAction("UPDATE_TRANSACTION_ASYNC")
 export const deleteTransactionAsyncAC = createAction("DELETE_TRANSACTION_ASYNC")
 
 export function* TransactionsWatcher():Generator{
-  takeEvery("CREATE_TRANSACTION_ASYNC", CreateWorker)
-  takeEvery("READ_TRANSACTIONS_ASYNC", ReadWorker)
-  takeEvery("UPDATE_TRANSACTION_ASYNC", UpdateWorker)
-  takeEvery("DELETE_TRANSACTION_ASYNC", DeleteWorker)
+  yield takeEvery("CREATE_TRANSACTION_ASYNC", CreateWorker)
+  yield takeEvery("READ_TRANSACTIONS_ASYNC", ReadWorker)
+  yield takeEvery("UPDATE_TRANSACTION_ASYNC", UpdateWorker)
+  yield takeEvery("DELETE_TRANSACTION_ASYNC", DeleteWorker)
 }
 
 function* CreateWorker():Generator{

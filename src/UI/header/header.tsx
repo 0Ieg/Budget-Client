@@ -39,7 +39,18 @@ align-items: center;
 svg{
   width: 30px;
   height: 30px;
+  &:hover{
+    color: var(--color-pink);
+  }
 }
+.left, .right{
+  max-width: 200px;
+  width: 100%;
+  &.left{
+    display: flex;
+  }
+}
+
 `
 export const Header:FC = ()=>{
   const isAuth = useSelector((state:StateType)=>state.auth.isAuth)
@@ -52,11 +63,11 @@ export const Header:FC = ()=>{
   }
   return (
     <Styled className='container'>
-      <Link to={''}><BitcoinSVG/></Link>
+      <Link className='left' to={''}><div><BitcoinSVG/></div></Link>
       {isAuth && <Menu/>}
       {isAuth?
-        <button className='logout' onClick={logoutHandler}>Log Out</button>:
-        <Link className='login' to={'signin'}>Log In / Sign In</Link>
+        <button className='logout right' onClick={logoutHandler}>Log Out</button>:
+        <Link className='login right' to={'signin'}>Log In / Sign In</Link>
       }
     </Styled>
   )
