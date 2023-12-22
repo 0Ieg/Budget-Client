@@ -1,9 +1,9 @@
 import { createAction } from "@reduxjs/toolkit";
 import { takeEvery, put, call } from "redux-saga/effects";
-import { deleteCategoryAPI, readCategoriesAPI, updateCategoryAPI } from "../../../API/categories.api";
-import { deleteCategoryAC, readCategoriesAC, updateCategoryAC } from "./categories.slice";
+import { createCategoryAPI, deleteCategoryAPI, readCategoriesAPI, updateCategoryAPI } from "../../../API/categories.api";
+import { createCategoryAC, deleteCategoryAC, readCategoriesAC, updateCategoryAC } from "./categories.slice";
 
-export const createCategoryAsyncAC = createAction("CREATE_CATEGORY_ASYNC")
+export const createCategoryAsyncAC = createAction<string>("CREATE_CATEGORY_ASYNC")
 export const readCategoriesAsyncAC = createAction("READ_CATEGORIES_ASYNC")
 export const updateCategoryAsyncAC = createAction<{id:string, title:string}>("UPDATE_CATEGORY_ASYNC")
 export const deleteCategoryAsyncAC = createAction<string>("DELETE_CATEGORY_ASYNC")
@@ -15,8 +15,9 @@ export function* CategoriesWatcher():Generator{
   yield takeEvery("DELETE_CATEGORY_ASYNC", DeleteWorker)
 }
 
-function* CreateWorker():Generator{
-
+function* CreateWorker(action:{type:string, payload:string}):Generator{
+  const category = yield call(createCategoryAPI, action.payload)
+  if(category) yield put(createCategoryAC(category))
 }
 function* ReadWorker():Generator{
   const categories = yield call(readCategoriesAPI)

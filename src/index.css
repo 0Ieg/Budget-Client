@@ -9,9 +9,8 @@ html,body{height: 100%;}
 /*Sizes*/
   --index: calc(1vw + 1vh);
   --margin-big: 50px;
-  --margin-middle: 35px;
   --margin-middle: 15px;
-  --margin-small: 5px;
+  --margin-small: 10px;
   --borrad-big: 10px;
   --borrad-small: 5px;
 /*Colors*/
@@ -57,3 +56,14 @@ html,body{height: 100%;}
   font-weight: 900;
 }
 
+/* -------------------------------------- Removes settings for inputs with the "number" type */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type='number'],
+input[type="number"]:hover,
+input[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
+}

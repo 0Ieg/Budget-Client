@@ -11,7 +11,8 @@ const Styled = styled.nav`
     display: flex;
     transition: color 0.1s ease;
     a{
-      font-size: 20px;
+      font: 700 18px Inter;
+      text-transform: uppercase;
     }
     &:hover{
       color: var(--color-pink);

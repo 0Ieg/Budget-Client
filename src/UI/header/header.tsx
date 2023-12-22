@@ -44,7 +44,7 @@ svg{
   }
 }
 .left, .right{
-  max-width: 200px;
+  max-width: 100px;
   width: 100%;
   &.left{
     display: flex;

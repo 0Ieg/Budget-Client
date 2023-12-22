@@ -6,6 +6,9 @@ const slice = createSlice({
   name: 'categories',
   initialState,
   reducers:{
+    createCategoryAC: (state, action)=>{
+      state.push(action.payload)
+    },
     readCategoriesAC:(state, action)=>{
       return state.concat(action.payload)
     },
@@ -18,8 +21,11 @@ const slice = createSlice({
         return category
       })
     },
+    clearCategoriesAC:(state)=>{
+      return state = []
+    }
   }
 })
 
 export const CategoriesReducer = slice.reducer
-export const {readCategoriesAC, deleteCategoryAC, updateCategoryAC} = slice.actions
+export const { createCategoryAC, readCategoriesAC, deleteCategoryAC, updateCategoryAC, clearCategoriesAC} = slice.actions

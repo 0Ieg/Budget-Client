@@ -1,10 +1,14 @@
+import { CategoryType } from "./category.dto"
+
 export interface TransactionType {
+  amount: number
+  category:CategoryType
+  categoryId: string
+  created: string
   id: string
   title: string
-  amount: number
-  type: 'income'|'expense'
-  created: string
+  
+  type: "income"|"expense"
   updated: string
-  categoryId: string
   userId: string
 }

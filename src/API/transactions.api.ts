@@ -1,42 +1,41 @@
 import { toast } from "react-toastify"
 import { myAxios } from "./axios"
 
-export const readCategoriesAPI = ()=>{
+export const readTransactionsAPI = ()=>{
   return(
-    myAxios.get('categories')
+    myAxios.get('transactions/all')
     .then(res=>{
       return res.data
     })
     .catch(error=>{toast.error(error.response?.data.message)})
   )
 }
-export const deleteCategoryAPI = (id:string)=>{
+export const deleteTransactionAPI = (id:string)=>{
   return(
-    myAxios.delete(`categories/${id}`)
+    myAxios.delete(`transactions/${id}`)
     .then(res=>{
-      console.log(res.data)
-      toast.success('The category has been deleted')
+      toast.success('The transaction has been deleted')
       return res.data
     })
     .catch(error=>{toast.error(error.response?.data.message)})
   )
 }
-export const updateCategoryAPI = (data:{id:string, title:string})=>{
+export const updateTransactionAPI = (data:{id:string, title:string})=>{
   return(
-    myAxios.patch(`categories/${data.id}`, {title:data.title})
+    myAxios.patch(`transactions/${data.id}`, {title:data.title})
     .then(res=>{
-      toast.success('The category has been updated')
+      toast.success('The transaction has been updated')
       return res.data
     })
     .catch(error=>{toast.error(error.response?.data.message)})
   )
 }
 
-export const createCategoryAPI = (title:string)=>{
+export const createTransactionAPI = (title:string)=>{
   return(
-    myAxios.post('categories', {title})
+    myAxios.post('transactions', {title})
     .then(res=>{
-      toast.success('The category has been created')
+      toast.success('The transaction has been created')
       return res.data
     })
     .catch(error=>{toast.error(error.response?.data.message)})
