@@ -1,12 +1,13 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { StateType } from '../../../BLL/store/store';
-import { createCategoryAsyncAC, readCategoriesAsyncAC } from '../../../BLL/store/categories/categories.saga';
+import { readCategoriesAsyncAC } from '../../../BLL/store/categories/categories.saga';
 import { CategoryType } from '../../../API/dto/category.dto';
 import { Category } from './category';
 import { CreateSVG } from '../../../BLL/icons/iconst';
 import { clearCategoriesAC } from '../../../BLL/store/categories/categories.slice';
+import { ModalWindow } from './new';
 
 const Styled = styled.div`
 display: flex;
@@ -25,9 +26,9 @@ margin-top: var(--margin-middle);
   grid-gap: var(--margin-middle);
 }
 .category__create{
-  display: grid;
-  grid-template-columns: 1fr 20px;
-  grid-gap: var(--margin-middle);
+  display: flex;
+  align-items: center;
+  gap: var(--margin-middle);
   padding: var(--margin-middle);
   border-radius: var(--borrad-small);
   background-color: var(--color-green);
@@ -40,6 +41,7 @@ margin-top: var(--margin-middle);
   }
   &:hover{
     box-shadow: 0 0 5px var(--color-gray-light);
+    
   }
 }
 `
@@ -47,6 +49,7 @@ export const Categories:FC = ()=>{
   const categories = useSelector((state:StateType)=>state.categories)
   const isAuth = useSelector((state:StateType)=>state.auth.isAuth)
   const dispatch = useDispatch()
+  const [creating, setCreating] = useState(false)
   const CategoriesList = categories.map((category:CategoryType)=><Category data={category} key={category.id}/>)
   useEffect(()=>{
     if (isAuth){
@@ -54,20 +57,20 @@ export const Categories:FC = ()=>{
     }
     return ()=>{dispatch(clearCategoriesAC())}
   },[])
-  const createHandler = ()=>{
-    dispatch(createCategoryAsyncAC('Новая категория'))
-  }
   return (
     <Styled>
       <div className='categories__title'>These are all your categories</div>
       <ul className="category__list">
         {CategoriesList}
       </ul>
-      <button className="category__create" onClick={createHandler}>
+      {!creating &&
+      <button className="category__create" onClick={()=>setCreating(true)}>
         <span>Create new category</span>
         <CreateSVG/>
-      </button>
+      </button>}
+      {creating && <ModalWindow callback={setCreating} type='Create' id='' value=''/>}
     </Styled>
   )
 }
+
 

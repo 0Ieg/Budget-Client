@@ -1,7 +1,11 @@
-import { FC, useDebugValue, useEffect } from 'react';
+import { FC, useDebugValue, useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ButtonForForm } from '../../common/button-for-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTransactionAsyncAC } from '../../../BLL/store/transactions/transactions.saga';
+import { ModalWindow } from '../categories/new';
+import { StateType } from '../../../BLL/store/store';
 
 const Styled = styled.article`
 grid-area: Form;
@@ -25,6 +29,21 @@ grid-area: Form;
       outline: 0;
     }
   }
+  .select{
+    background-color: var(--color-background-light);
+    padding: var(--margin-small);
+    border-radius: var(--borrad-small);
+    color: var(--color-gray-light);
+    border: 0;
+    outline: none;
+  }
+  .new_category{
+    cursor: pointer;
+    transition: all 0.1s ease;
+    &:hover{
+      color: var(--color-red);
+    }
+  }
   .radios{
     display: flex;
     gap: var(--margin-middle);
@@ -40,19 +59,25 @@ grid-area: Form;
 }
 `
 export const TransactionsForm:FC = ()=>{
+  const dispatch = useDispatch()
   const {handleSubmit, reset, formState:{isSubmitSuccessful}, register} = useForm({mode:'onTouched'})
   const validParams = {
     title: {required:true},
     amount: {required:true},
   }
-  const formHandler = (data:FieldValues)=>{
-    console.log(data)
+  const formHandler = (data:any)=>{
+    dispatch(createTransactionAsyncAC({...data, 'amount':+data.amount}))
+    console.log({...data, 'amount':+data.amount})
   }
+  const categories = useSelector((state:StateType)=>state.categories)
+  const CategoriesOptions = categories.map(category=><option className='option' value={category.id} key={category.id}>{category.title}</option>)
+  const [categoryCreating, setCategoryCreating] = useState(false)
   useEffect(()=>{
     reset({
       'title':null,
       'amount':null,
-      'type':'Income'
+      'type': null,
+      'categoryId': categories[0]?.id
     })
   },[isSubmitSuccessful])
   return (
@@ -66,12 +91,20 @@ export const TransactionsForm:FC = ()=>{
           <label htmlFor="tr_f_amount">Amount</label>
           <input className='input_amount' type="number" {...register('amount', validParams.amount)} id='tr_f_amount'/>
         </div>
+        <div className='input__wrapper'>
+          <label htmlFor="tr_f_category">Category</label>
+          <select className='select' {...register('categoryId')} id="tr_f_category">
+            {CategoriesOptions}
+          </select>
+        </div>
+        <div className="new_category" onClick={()=>{setCategoryCreating(true)}}>+ New Categories</div>
         <div className="radios">
-          <label><input type="radio" {...register('type')} value={'Income'} id='tr_f_type'/>Income</label>
-          <label><input type="radio" {...register('type')} value={'Expense'} id='tr_f_type'/>Expense</label>
+          <label><input type="radio" {...register('type')} value={'income'} id='tr_f_type'/>Income</label>
+          <label><input type="radio" {...register('type')} value={'expense'} id='tr_f_type'/>Expense</label>
         </div>
         <ButtonForForm>Submit</ButtonForForm>
       </form>
+      {categoryCreating && <ModalWindow callback={setCategoryCreating} type='Create' id='' value=''/>}
     </Styled>
   )
 }

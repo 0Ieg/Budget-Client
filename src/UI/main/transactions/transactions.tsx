@@ -6,6 +6,8 @@ import { TransactionsList } from './list';
 import { useDispatch } from 'react-redux';
 import { readTransactionsAsyncAC } from '../../../BLL/store/transactions/transactions.saga';
 import { clearTransactionsAC } from '../../../BLL/store/transactions/transactions.slice';
+import { readCategoriesAsyncAC } from '../../../BLL/store/categories/categories.saga';
+import { clearCategoriesAC } from '../../../BLL/store/categories/categories.slice';
 
 const Styled = styled.section`
 padding: var(--margin-middle) 0;
@@ -25,7 +27,11 @@ export const Transactions:FC = ()=>{
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(readTransactionsAsyncAC())
-    return ()=>{dispatch(clearTransactionsAC())}
+    dispatch(readCategoriesAsyncAC())
+    return ()=>{
+      dispatch(clearTransactionsAC())
+      dispatch(clearCategoriesAC())
+    }
   },[])
   return (
     <Styled>

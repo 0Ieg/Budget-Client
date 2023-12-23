@@ -1,5 +1,6 @@
 import { toast } from "react-toastify"
 import { myAxios } from "./axios"
+import { CreateTransactionType } from "./dto/create-transaction.dto"
 
 export const readTransactionsAPI = ()=>{
   return(
@@ -31,9 +32,9 @@ export const updateTransactionAPI = (data:{id:string, title:string})=>{
   )
 }
 
-export const createTransactionAPI = (title:string)=>{
+export const createTransactionAPI = (data:CreateTransactionType)=>{
   return(
-    myAxios.post('transactions', {title})
+    myAxios.post('transactions', data)
     .then(res=>{
       toast.success('The transaction has been created')
       return res.data

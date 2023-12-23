@@ -21,6 +21,7 @@ grid-gap: var(--margin-middle);
     min-width: 95px;
     button{
       width:100%;
+      font-size: 14px;
     }
   }
   .pages{
@@ -32,7 +33,7 @@ grid-gap: var(--margin-middle);
       padding: var(--margin-small);
       cursor: pointer;
       background-color: var(--color-blue);
-      font-size: 18px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -48,6 +49,17 @@ grid-gap: var(--margin-middle);
   display: flex;
   flex-direction: column;
   gap: var(--margin-small);
+  .headers{
+    padding: var(--margin-small);
+    background-color: var(--color-background-light);
+    color: var(--color-gray-light);
+    border-radius: var(--borrad-small);
+    display: grid;
+    grid-template-columns: 50px 2fr 1fr 2fr 1fr 50px;
+    div{
+      font-size: 16px;
+    }
+  }
 }
 `
 export const TransactionsList:FC = ()=>{
@@ -71,6 +83,14 @@ export const TransactionsList:FC = ()=>{
         </div>
       </div>
       <div className="list">
+        <div className="headers">
+          <div className="number">№</div>
+          <div className='title'>Title</div>
+          <div className='amount'>Amount</div>
+          <div className="category">Category</div>
+          <div className="date">Date</div>
+          <div className="delete">Action</div>
+        </div>
         {Transactions}
       </div>
     </Styled>
