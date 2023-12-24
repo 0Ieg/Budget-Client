@@ -1,13 +1,8 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
-import { TransactionsForm } from './form';
-import { TransactionsStatistics } from './statistics';
-import { TransactionsList } from './list';
-import { useDispatch } from 'react-redux';
-import { readTransactionsAsyncAC } from '../../../BLL/store/transactions/transactions.saga';
-import { clearTransactionsAC } from '../../../BLL/store/transactions/transactions.slice';
-import { readCategoriesAsyncAC } from '../../../BLL/store/categories/categories.saga';
-import { clearCategoriesAC } from '../../../BLL/store/categories/categories.slice';
+import { TransactionsForm } from './fom/form';
+import { TransactionsStatistics } from './statistics/statistics';
+import { TransactionsList } from './list/list';
 
 const Styled = styled.section`
 padding: var(--margin-middle) 0;
@@ -24,15 +19,6 @@ grid-gap: var(--margin-middle);;
 }
 `
 export const Transactions:FC = ()=>{
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(readTransactionsAsyncAC())
-    dispatch(readCategoriesAsyncAC())
-    return ()=>{
-      dispatch(clearTransactionsAC())
-      dispatch(clearCategoriesAC())
-    }
-  },[])
   return (
     <Styled>
       <TransactionsForm/>

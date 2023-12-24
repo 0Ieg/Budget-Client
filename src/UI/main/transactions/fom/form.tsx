@@ -1,11 +1,11 @@
 import { FC, useDebugValue, useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { ButtonForForm } from '../../common/button-for-form';
+import { ButtonForForm } from '../../../common/button-for-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTransactionAsyncAC } from '../../../BLL/store/transactions/transactions.saga';
-import { ModalWindow } from '../categories/new';
-import { StateType } from '../../../BLL/store/store';
+import { createTransactionAsyncAC } from '../../../../BLL/store/transactions/transactions.saga';
+import { ModalWindow } from '../../categories/new';
+import { StateType } from '../../../../BLL/store/store';
 
 const Styled = styled.article`
 grid-area: Form;
@@ -102,7 +102,7 @@ export const TransactionsForm:FC = ()=>{
           <label><input type="radio" {...register('type')} value={'income'} id='tr_f_type'/>Income</label>
           <label><input type="radio" {...register('type')} value={'expense'} id='tr_f_type'/>Expense</label>
         </div>
-        <ButtonForForm>Submit</ButtonForForm>
+        <ButtonForForm disabled={false}>Submit</ButtonForForm>
       </form>
       {categoryCreating && <ModalWindow callback={setCategoryCreating} type='Create' id='' value=''/>}
     </Styled>

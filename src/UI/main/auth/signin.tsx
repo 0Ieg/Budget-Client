@@ -65,7 +65,7 @@ export const Signin:FC = ()=>{
         <h2 className="title">Login</h2>
         <input className='input' type="email" {...register('email')} placeholder='Email'/>
         <input className='input' type="text" {...register('password')} placeholder='Password'/>
-        <ButtonForForm>Submit</ButtonForForm>
+        <ButtonForForm disabled={false}>Submit</ButtonForForm>
         <Link className='link' to={'/signup'}>You don't have an account?</Link>
       </form>
     </Styled>

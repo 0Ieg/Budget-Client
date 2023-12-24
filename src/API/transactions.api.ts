@@ -11,6 +11,15 @@ export const readTransactionsAPI = ()=>{
     .catch(error=>{toast.error(error.response?.data.message)})
   )
 }
+export const readTransactionsPagAPI = (params:{take:number, page:number})=>{
+  return(
+    myAxios.get('transactions/pag', {params})
+    .then(res=>{
+      return res.data
+    })
+    .catch(error=>{toast.error(error.response?.data.message)})
+  )
+}
 export const deleteTransactionAPI = (id:string)=>{
   return(
     myAxios.delete(`transactions/${id}`)

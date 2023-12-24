@@ -67,7 +67,7 @@ export const Header:FC = ()=>{
       {isAuth && <Menu/>}
       {isAuth?
         <button className='logout right' onClick={logoutHandler}>Log Out</button>:
-        <Link className='login right' to={'signin'}>Log In / Sign In</Link>
+        <Link className='login right' to={'signin'}>Log In</Link>
       }
     </Styled>
   )

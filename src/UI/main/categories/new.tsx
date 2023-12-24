@@ -66,7 +66,7 @@ export const ModalWindow:FC<propsType> = ({callback, type, id, value})=>{
     <WindowStyled>
       <form className='form' onSubmit={handleSubmit(submitHandler)}>
         <input className='input' type="text" {...register('title',{required:true})} placeholder='Category title' />
-        <ButtonForForm>{type}</ButtonForForm>
+        <ButtonForForm disabled={false}>{type}</ButtonForForm>
         <button className="cancel" type='reset' onClick={cancelHandler}>Cancel</button>
       </form>
     </WindowStyled>
