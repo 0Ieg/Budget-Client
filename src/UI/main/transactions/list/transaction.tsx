@@ -4,6 +4,8 @@ import { TransactionType } from '../../../../API/dto/transaction.dto';
 import { DeleteCategorySVG } from '../../../../BLL/icons/iconst';
 import { useDispatch } from 'react-redux';
 import { deleteTransactionAsyncAC } from '../../../../BLL/store/transactions/transactions.saga';
+import { formatToRUB } from '../../../common/helpers/currency.helper';
+import { formatDate } from '../../../common/helpers/date.helper';
 
 const Styled = styled.div`
 padding: var(--margin-small);
@@ -36,9 +38,9 @@ export const Transaction:FC<{index:number, data:TransactionType}> = ({data, inde
     <Styled>
       <div className="number">{++index}</div>
       <div className={data.type==='expense'?'title color_red':'title color_green'}>{data.title}</div>
-      <div className={data.type==='expense'?'amount color_red':'amount color_green'}>{data.type==='expense'?'- '+data.amount+' $':'+ '+data.amount+' $'}</div>
+      <div className={data.type==='expense'?'amount color_red':'amount color_green'}>{data.type==='expense'?'- '+formatToRUB(data.amount):'+ '+formatToRUB(data.amount)}</div>
       <div className="category">{data.category.title}</div>
-      <div className="date">{new Date(data.created).toLocaleDateString()}</div>
+      <div className="date">{formatDate(data.created)}</div>
       <div className="delete" onClick={deleteHandler}>
         <DeleteCategorySVG/>
       </div>

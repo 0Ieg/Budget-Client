@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ButtonForForm } from '../../../common/button-for-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { readCategoriesAsyncAC } from '../../../../BLL/store/categories/categories.saga';
 import { readTransactionsPagAsyncAC } from '../../../../BLL/store/transactions/transactions.saga';
 import { clearTransactionsAC } from '../../../../BLL/store/transactions/transactions.slice';
 import { clearCategoriesAC } from '../../../../BLL/store/categories/categories.slice';
+import { StateType } from '../../../../BLL/store/store';
+
 
 const Styled = styled.div`
 display: flex;
@@ -38,37 +40,58 @@ justify-self: end;
     opacity: 1;
   }
 }
+.paginate{
+  
+}
 `
 export const ListNavigation:FC = ()=>{
   const dispatch = useDispatch()
+  const count = useSelector((state:StateType)=>state.transactions.count)
   const [take, setTake] = useState(5)
   const [page, setPage] = useState(1)
-  
   useEffect(()=>{
     dispatch(readTransactionsPagAsyncAC({take, page}))
-    dispatch(readCategoriesAsyncAC())
     return ()=>{
       dispatch(clearTransactionsAC())
+    }
+  },[page])
+  useEffect(()=>{
+    dispatch(readCategoriesAsyncAC())
+    return ()=>{
       dispatch(clearCategoriesAC())
     }
   },[])
   const PreviousHandler = ()=>{
+    setPage(val=>--val)
     console.log("Previous")
   }
   const NextHandler = ()=>{
-    console.log("Next")
+    setPage(val=>++val)
+    console.log("Next", page)
+  }
+  const PageHandler = (page:number)=>{
+    setPage(page)
+  }
+  const pages = ()=>{
+    const pagesList = []
+    for(let i=1; i<=Math.ceil(count/take); i++){
+      pagesList.push(<div className={i===page?'page active':'page'} onClick={()=>i!==page && PageHandler(i)} key={new Date().toISOString()+i}>{i}</div>)
+    }
+    return pagesList
+  }
+  const handlePage = (selectedItem:{selected:number})=>{
+    setPage(selectedItem.selected)
   }
   return (
     <Styled>
       <div className="button" onClick={PreviousHandler}>
-        <ButtonForForm disabled={true}>Previous</ButtonForForm>
+        <ButtonForForm disabled={page<=1 && true}>Previous</ButtonForForm>
       </div>
       <div className="pages">
-        <div className="page active">1</div>
-        <div className="page">2</div>
+        {pages()}
       </div>
       <div className="button" onClick={NextHandler}>
-        <ButtonForForm disabled={false}>Next</ButtonForForm>
+        <ButtonForForm disabled={(take*page)>=count && true}>Next</ButtonForForm>
       </div>
     </Styled>
   )

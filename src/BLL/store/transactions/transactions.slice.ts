@@ -1,19 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TransactionType } from "../../../API/dto/transaction.dto";
 
-const initialState = 
-[] as TransactionType[]
+const initialState = {
+  transactions: [] as TransactionType[],
+  count: 0,
+  total:{income:0, expense:0}
+}
+
 
 const slice = createSlice({
   name: 'transactions',
   initialState,
   reducers:{
     readTransactionsAC: (state, action)=>{
-      console.log(action.payload)
-      return state.concat(action.payload)
+      return state = action.payload
     },
     clearTransactionsAC: (state)=>{
-      return state = []
+      return state = {transactions:[], count:0, total:{income:0, expense:0}}
     }
   }
 })

@@ -31,8 +31,8 @@ grid-gap: var(--margin-middle);
 }
 `
 export const TransactionsList:FC = ()=>{
-  const transactionsList = useSelector((state:StateType)=>state.transactions)
-  const Transactions = transactionsList.map((transaction:TransactionType, index)=><Transaction data={transaction} index={index} key={transaction.id}/>)
+  const listAndCount = useSelector((state:StateType)=>state.transactions)
+  const Transactions = listAndCount.transactions.map((transaction:TransactionType, index)=><Transaction data={transaction} index={index} key={transaction.id}/>)
   return (
     <Styled>
       <ListNavigation/>
