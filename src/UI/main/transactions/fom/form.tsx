@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createTransactionAsyncAC } from '../../../../BLL/store/transactions/transactions.saga';
 import { ModalWindow } from '../../categories/new';
 import { StateType } from '../../../../BLL/store/store';
+import { nodeModuleNameResolver } from 'typescript';
 
 const Styled = styled.article`
 grid-area: Form;
@@ -60,6 +61,7 @@ grid-area: Form;
 `
 export const TransactionsForm:FC = ()=>{
   const dispatch = useDispatch()
+  const categories = useSelector((state:StateType)=>state.categories)
   const {handleSubmit, reset, formState:{isSubmitSuccessful}, register} = useForm({mode:'onTouched'})
   const validParams = {
     title: {required:true},
@@ -69,15 +71,15 @@ export const TransactionsForm:FC = ()=>{
     dispatch(createTransactionAsyncAC({...data, 'amount':+data.amount}))
     console.log({...data, 'amount':+data.amount})
   }
-  const categories = useSelector((state:StateType)=>state.categories)
-  const CategoriesOptions = categories.map(category=><option className='option' value={category.id} key={category.id}>{category.title}</option>)
+  
+  const CategoriesOptions = categories.map((category)=><option className='option' value={category.id} key={category.id}>{category.title}</option>)
   const [categoryCreating, setCategoryCreating] = useState(false)
   useEffect(()=>{
     reset({
       'title':null,
       'amount':null,
       'type': null,
-      'categoryId': categories[0]?.id
+      'categoryId': null
     })
   },[isSubmitSuccessful])
   return (

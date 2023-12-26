@@ -1,8 +1,9 @@
 import { readTransactionsAPI, deleteTransactionAPI, createTransactionAPI, readTransactionsPagAPI } from './../../../API/transactions.api';
 import { createAction } from "@reduxjs/toolkit";
 import { takeEvery, put, call } from "redux-saga/effects";
-import { readTransactionsAC } from './transactions.slice';
+import { addTransactionAC, deleteTransactionAC, readTransactionsAC } from './transactions.slice';
 import { CreateTransactionType } from '../../../API/dto/create-transaction.dto';
+import { TransactionType } from '../../../API/dto/transaction.dto';
 
 export const createTransactionAsyncAC = createAction<CreateTransactionType>("CREATE_TRANSACTION_ASYNC")
 export const readTransactionsAsyncAC = createAction("READ_TRANSACTIONS_ASYNC")
@@ -19,8 +20,8 @@ export function* TransactionsWatcher():Generator{
 }
 
 function* CreateWorker(action:ReturnType<typeof createTransactionAsyncAC>):Generator{
-  const transactions = yield call(createTransactionAPI, action.payload)
-  // if(transactions) yield put(readTransactionsAC(transactions))
+  const transaction = yield call(createTransactionAPI, action.payload)
+  if(transaction) yield put(addTransactionAC(transaction))
 }
 function* ReadWorker():Generator{
   const transactions = yield call(readTransactionsAPI)
@@ -34,6 +35,6 @@ function* UpdateWorker():Generator{
   
 }
 function* DeleteWorker(action:ReturnType<typeof deleteTransactionAsyncAC>):Generator{
-  const transactions = yield call(deleteTransactionAPI, action.payload)
-  // if(transactions) yield put(readTransactionsAC(transactions)) 
+  const transaction = yield call(deleteTransactionAPI, action.payload)
+  if(transaction) yield put(deleteTransactionAC(transaction)) 
 }

@@ -3,27 +3,21 @@ import styled from 'styled-components';
 import { ButtonForForm } from '../../../common/button-for-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { readCategoriesAsyncAC } from '../../../../BLL/store/categories/categories.saga';
-import { readTransactionsPagAsyncAC } from '../../../../BLL/store/transactions/transactions.saga';
+import { readTransactionsAsyncAC, readTransactionsPagAsyncAC } from '../../../../BLL/store/transactions/transactions.saga';
 import { clearTransactionsAC } from '../../../../BLL/store/transactions/transactions.slice';
 import { clearCategoriesAC } from '../../../../BLL/store/categories/categories.slice';
 import { StateType } from '../../../../BLL/store/store';
+import ReactPaginate from 'react-paginate';
 
 
 const Styled = styled.div`
 display: flex;
-gap: var(--margin-middle);
-grid-area: navigation;
-justify-self: end;
-.button{
-  min-width: 95px;
-  button{
-    width:100%;
-    font-size: 14px;
-  }
-}
-.pages{
+justify-content: end;
+.paginate{
   display: flex;
-  gap: var(--margin-small);
+  gap: var(--margin-middle);
+  grid-area: navigation;
+  justify-self: end;
   .page{
     min-width: 45px;
     border-radius: var(--borrad-small);
@@ -39,9 +33,26 @@ justify-self: end;
   .active{
     opacity: 1;
   }
-}
-.paginate{
-  
+  .prev_next{
+    width: 95px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--borrad-small);
+    cursor: pointer;
+    background-color: var(--color-green);
+    font-size: 14px;
+    color: var(--color-background-dark);
+    transition: all 0.1s ease ;
+    border: 0;
+    &:hover{
+      box-shadow: 0 0 4px var(--color-gray-light);
+      color: var(--color-red);
+    }
+  }
+  .disabled{
+    opacity: 0.7;
+  }
 }
 `
 export const ListNavigation:FC = ()=>{
@@ -61,6 +72,7 @@ export const ListNavigation:FC = ()=>{
       dispatch(clearCategoriesAC())
     }
   },[])
+
   const PreviousHandler = ()=>{
     setPage(val=>--val)
     console.log("Previous")
@@ -80,19 +92,25 @@ export const ListNavigation:FC = ()=>{
     return pagesList
   }
   const handlePage = (selectedItem:{selected:number})=>{
-    setPage(selectedItem.selected)
+    setPage(selectedItem.selected+1)
   }
   return (
     <Styled>
-      <div className="button" onClick={PreviousHandler}>
-        <ButtonForForm disabled={page<=1 && true}>Previous</ButtonForForm>
-      </div>
-      <div className="pages">
-        {pages()}
-      </div>
-      <div className="button" onClick={NextHandler}>
-        <ButtonForForm disabled={(take*page)>=count && true}>Next</ButtonForForm>
-      </div>
+      <ReactPaginate
+        className='paginate'
+        previousClassName='prev_next'
+        nextClassName='prev_next'
+        disabledClassName='disabled'
+        pageClassName=''
+        pageLinkClassName='page'
+        disabledLinkClassName=''
+        activeClassName=''
+        activeLinkClassName='active'
+        pageCount={Math.ceil(count / take)}
+        pageRangeDisplayed={1}
+        marginPagesDisplayed={2}
+        onPageChange={handlePage}
+      />
     </Styled>
   )
 }

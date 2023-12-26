@@ -92,4 +92,3 @@ export const TransactionsStatistics:FC = ()=>{
     </Styled>
   )
 }
-
